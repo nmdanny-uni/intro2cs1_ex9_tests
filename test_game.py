@@ -27,12 +27,12 @@ def assert_finishes_with_moves(cfg_file, moves):
 
     # First, we expect an EOF error, as we haven't won yet and the game should ask for another step.
     failing_moves = "\n".join(moves[:-1])
-    _out, err = Popen(proc_args, text=True, stdin=PIPE, stderr=PIPE, stdout=PIPE).communicate(failing_moves)
+    _out, err = Popen(proc_args, universal_newlines=True, stdin=PIPE, stderr=PIPE, stdout=PIPE).communicate(failing_moves)
     assert "EOF" in err, "Game should've raised an EOF error as we've quit before providing all moves"
 
     # Now, we expect no error(graceful termination of the game) after all valid moves have been given.
     success_moves = "\n".join(moves)
-    _out, err = Popen(proc_args, text=True, stdin=PIPE, stderr=PIPE, stdout=PIPE).communicate(success_moves)
+    _out, err = Popen(proc_args, universal_newlines=True, stdin=PIPE, stderr=PIPE, stdout=PIPE).communicate(success_moves)
     assert len(err) == 0, "Game did not terminate successfully after giving all valid moves."
 
 
@@ -45,7 +45,7 @@ def assert_fails_with_moves(cfg_file, moves):
     """
     proc_args = PYTHON_PROC_ARGS + [cfg_file]
     moves_st = "\n".join(moves)
-    _out, err = Popen(proc_args, text=True, stdin=PIPE, stderr=PIPE, stdout=PIPE).communicate(moves_st)
+    _out, err = Popen(proc_args, universal_newlines=True, stdin=PIPE, stderr=PIPE, stdout=PIPE).communicate(moves_st)
     assert "EOF" in err, f"Expected game to fail(EOF) when given moves {moves}," \
                          f"but it terminated as if we've won."
 

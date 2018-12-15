@@ -47,3 +47,6 @@ Python must be of version 3.6 or higher(you can check this by running
 In some systems, you may need to use `python3` instead, in which case,
 change the line `PYTHON_PROC_ARGS = ["python", "../game.py"]` to `PYTHON_PROC_ARGS = ["python3", "../game.py"]`
 at `test_game.py`
+
+Similarly, `pytest` must refer to the python3 version. (Ensure that via
+`pytest --version`, should look something like `programs/python/python36`).
