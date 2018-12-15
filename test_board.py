@@ -98,8 +98,9 @@ def test_cell_content_works():
     assert "Y" == board.cell_content((2, 1))
 
     # the destination (3,7) is considered part of the board:
-    winning_car = Car("O", 3, (3,5), HORIZONTAL)
+    winning_car = Car("O", 3, (3,4), HORIZONTAL)
     assert board.add_car(winning_car)
+    assert board.move_car("O", MOVE_RIGHT)
     assert "O" == board.cell_content(board.target_location())
 
     # a horizontal car at (3,6) doesn't necessarily mean it's at (3,7) too

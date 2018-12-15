@@ -38,3 +38,12 @@ Create a 'tests' folder within your ex9 folder, and place the tests there.
 
 Run via the terminal command `pytest` when inside the `tests` directory(and not the parent `ex9` folder!),
 or via PyCharm.
+
+### Note
+`test_game.py` uses the `python` command in order to test the game.
+Python must be of version 3.6 or higher(you can check this by running
+ `python --version` via the terminal)
+
+In some systems, you may need to use `python3` instead, in which case,
+change the line `PYTHON_PROC_ARGS = ["python", "../game.py"]` to `PYTHON_PROC_ARGS = ["python3", "../game.py"]`
+at `test_game.py`
