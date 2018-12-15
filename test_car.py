@@ -8,7 +8,7 @@ MOVE_LEFT = "l"
 MOVE_RIGHT = "r"
 
 
-def test__get_name():
+def test_get_name():
     car = Car("a", 2, (0, 0), VERTICAL)
     assert "a" == car.get_name()
     car2 = Car("abra123", 2, (0, 0), VERTICAL)
@@ -26,7 +26,7 @@ def test_initial_car_coordinates():
     ]) == sorted(car2.car_coordinates())
 
 
-def test__possible_moves():
+def test_possible_moves():
     car = Car("test", 2, (1,4), VERTICAL)
     car2 = Car("test", 4, (1,4), HORIZONTAL)
 
@@ -36,7 +36,7 @@ def test__possible_moves():
     assert sorted([MOVE_LEFT, MOVE_RIGHT]) == sorted(possible_moves2)
 
 
-def test__move():
+def test_move():
     # moving in valid direction
     car = Car("test", 2, (1,4), VERTICAL)
     coords0 = car.car_coordinates()
@@ -70,12 +70,17 @@ def test__move():
     assert not car.move("abcd")
     assert sorted(coords0) == sorted(car.car_coordinates())
 
+    # cars have no bound limits
+    car = Car("woot", 2, (0, 0), HORIZONTAL)
+    assert car.move(MOVE_LEFT)
+    assert sorted([(0, -1), (0, 0)]) == sorted(car.car_coordinates())
+
 
 def test_move_requirements():
     car = Car("oki", 2, (2,4), HORIZONTAL)
-    assert sorted([(2,5), (2,6)]) == sorted(car.movement_requirements(MOVE_RIGHT))
-    assert sorted([(2,3), (2,4)]) == sorted(car.movement_requirements(MOVE_LEFT))
+    assert sorted([(2,6)]) == sorted(car.movement_requirements(MOVE_RIGHT))
+    assert sorted([(2,3)]) == sorted(car.movement_requirements(MOVE_LEFT))
 
     car = Car("oki", 2, (2,4), VERTICAL)
-    assert sorted([(1,4), (2,4)]) == sorted(car.movement_requirements(MOVE_UP))
-    assert sorted([(3,4), (4,4)]) == sorted(car.movement_requirements(MOVE_DOWN))
+    assert sorted([(1,4)]) == sorted(car.movement_requirements(MOVE_UP))
+    assert sorted([(4,4)]) == sorted(car.movement_requirements(MOVE_DOWN))

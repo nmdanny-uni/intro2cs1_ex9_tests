@@ -33,6 +33,9 @@ def test_add_car():
     # can't add car with same name
     assert not board.add_car(Car("R", 2, (5,5), VERTICAL))
 
+    # can't add car out of bounds
+    assert not board.add_car(Car("Y", 1, (0, -1), VERTICAL))
+    assert not board.add_car(Car("Y", 1, (-1, 0), HORIZONTAL))
     # can't add car with length that makes it go out of bounds
     assert not board.add_car(Car("Y", 8, (2, 0), HORIZONTAL))
     assert not board.add_car(Car("Y", 7, (1, 4), VERTICAL))
@@ -46,6 +49,10 @@ def test_add_car():
     # can't add a car that collides with car2
     assert not board.add_car(Car("B", 1, (6, 5), HORIZONTAL))
     assert not board.add_car(Car("B", 2, (4, 5), VERTICAL))
+
+    # ensure none of the cars that should've failed to be added, were added somehow
+    # so we should only have have 7 occupied cells(5 from 'R', 2 from 'ZO').
+    assert 7 == sum(1 for coord in board.cell_list() if board.cell_content(coord) if coord is not None)
 
 
 def test_board_str_different_representations():
@@ -63,6 +70,20 @@ def test_board_str_different_representations():
     # so 3 different strings
     assert 3 == len(board_strs)
 
+    # now we're doing operations that "undo" them. They should result in identical
+    # boards to one's we've already seen, hence the total number of board string representations
+    # should remain same. (e.g, our board representation shouldn't keep track of number of turns or
+    # anything like that)
+    assert board.move_car("R", MOVE_LEFT)
+    board_strs.add(str(board))
+    assert board.move_car("R", MOVE_RIGHT)
+    board_strs.add(str(board))
+    assert board.move_car("R", MOVE_LEFT)
+    board_strs.add(str(board))
+
+
+    assert 3 == len(board_strs)
+
 
 def test_cell_content_works():
     board = Board()
@@ -75,6 +96,17 @@ def test_cell_content_works():
     assert "R" == board.cell_content((0, 1))
     assert "Y" == board.cell_content((1, 1))
     assert "Y" == board.cell_content((2, 1))
+
+    # the destination (3,7) is considered part of the board:
+    winning_car = Car("O", 3, (3,5), HORIZONTAL)
+    assert board.add_car(winning_car)
+    assert "O" == board.cell_content(board.target_location())
+
+    # a horizontal car at (3,6) doesn't necessarily mean it's at (3,7) too
+    another_board = Board()
+    not_a_winning_car = Car("R", 1, (3, 6), HORIZONTAL)
+    assert another_board.add_car(not_a_winning_car)
+    assert another_board.cell_content(board.target_location()) is None
 
 
 def test_possible_moves_works():
