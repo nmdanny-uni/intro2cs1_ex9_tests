@@ -66,22 +66,8 @@ def test_board_str_different_representations():
     assert board.move_car("R", MOVE_RIGHT)
     board_strs.add(str(board))
 
-    # we performed 3 operations that changed the board(to new states)
-    # so 3 different strings
-    assert 3 == len(board_strs)
-
-    # now we're doing operations that "undo" them. They should result in identical
-    # boards to one's we've already seen, hence the total number of board string representations
-    # should remain same. (e.g, our board representation shouldn't keep track of number of turns or
-    # anything like that)
-    assert board.move_car("R", MOVE_LEFT)
-    board_strs.add(str(board))
-    assert board.move_car("R", MOVE_RIGHT)
-    board_strs.add(str(board))
-    assert board.move_car("R", MOVE_LEFT)
-    board_strs.add(str(board))
-
-
+    # we performed 3 operations that changed the board(to 3 different states)
+    # so we should've seen 3 different strings
     assert 3 == len(board_strs)
 
 
