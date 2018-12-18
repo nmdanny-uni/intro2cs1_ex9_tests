@@ -31,22 +31,22 @@ Not covered:
   
 ## Usage
 
-Requires 'pytest' to be available in your environment. Can be installed via `pip install pytest`
+Place the tests within the ex9 project folder(either directly or within
+a nested directory within the main folder.)
 
-Create a 'tests' folder within your ex9 folder, and place the tests there.
-(Doesn't have to be called 'tests', but must be in a folder within ex9's folder)
+Requires 'pytest' to be available in your environment. Can be installed via 
+`python -m pip install pytest`,
+then you can run the tests via `python -m pytest -vv` or via
+PyCharm
 
-Run via the terminal command `pytest` when inside the `tests` directory(and not the parent `ex9` folder!),
-or via PyCharm.
+# Note 
+Requires python 3.6.
+ 
+ On some systems you may have to type `python3` 
+instead of `python` in the above commands.
 
-### Note
-`test_game.py` uses the `python` command in order to test the game.
-Python must be of version 3.6 or higher(you can check this by running
- `python --version` via the terminal)
+If there happen to be multiple 'game.py' files within your project root,
+it will use the topmost(most nested) one. 
 
-In some systems, you may need to use `python3` instead, in which case,
-change the line `PYTHON_PROC_ARGS = ["python", "../game.py"]` to `PYTHON_PROC_ARGS = ["python3", "../game.py"]`
-at `test_game.py`
-
-Similarly, `pytest` must refer to the python3 version. (Ensure that via
-`pytest --version`, should look something like `programs/python/python36`).
+(If you run `python -m pytest -k "test_ensure_tests_configured_corrrectly" -s` 
+ it will tell you which python executable and game.py file is being used)
