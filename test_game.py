@@ -60,8 +60,8 @@ class Helper:
 
     @staticmethod
     def __find_game_py():
-        cur_dir = str(Path.cwd())
-        walk = os.walk(cur_dir, topdown=False, followlinks=False)
+        cur_dir = str(Path.cwd().parent)
+        walk = os.walk(cur_dir, topdown=False)
         for cur_dir, _subdirs, files in walk:
             if "game.py" in files:
                 return Path(cur_dir, "game.py")
